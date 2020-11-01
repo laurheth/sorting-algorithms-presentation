@@ -6,6 +6,7 @@ catch {
     // Dang, oh well
 }
 
+// Represents one individual bar in the graphs
 class barNum {
     index;
     width;
@@ -51,6 +52,7 @@ class barNum {
     }
 }
 
+// Class for a specific sort box
 class sortBox {
     // Where to draw things
     mainBox;
@@ -74,6 +76,13 @@ class sortBox {
     // All buttons
     allButtons;
 
+    /**
+     * 
+     * @param {string} id of the HTML element to make into a bar graph
+     * @param {number} length of the array of numbers. i.e. how many bars?
+     * @param {(Array,number)=>Promise} callback function for each individual step of the algorithm. Async to allow illustrative pauses.
+     * @param {number} stopNum maximum number of allowed iterations
+     */
     constructor(id, length, callback, stopNum=50) {
         this.stopNum=stopNum;
         this.callback=callback;
@@ -158,6 +167,8 @@ class sortBox {
     }
 }
 
+// Quicksort!
+// I did not see an easy way to break this into steps, so the whole thing just runs
 const quickSort = async (numbers,iterations,zeroIndex=0) => {
     if (numbers.length<=1) {
         return numbers;
@@ -213,6 +224,7 @@ const quickSort = async (numbers,iterations,zeroIndex=0) => {
 
 const unsorted = new sortBox('noSort',20);
 const quickSortBox = new sortBox('quickSort',69,quickSort);
+// Bubbles :)
 const bubbleSort = new sortBox('bubbleSort',20,
     async (numbers,iterations)=>{
         let changed=false;
@@ -239,6 +251,7 @@ const bubbleSort = new sortBox('bubbleSort',20,
     }
 );
 
+// Cocktail sort!
 const cocktailSort = new sortBox('cocktailSort',20,
     async (numbers,iterations)=>{
         let changed=false;
@@ -284,6 +297,7 @@ const cocktailSort = new sortBox('cocktailSort',20,
     }
 );
 
+// Insertion sort!
 const insertSort = new sortBox('insertSort',20,
     async (numbers,iterations)=>{
         let found=false;
@@ -313,8 +327,9 @@ const insertSort = new sortBox('insertSort',20,
     }
 );
 
-const subLists=[];
 
+// Merge sort. A bit buggy but usually works out in the end
+const subLists=[];
 const mergeSort = new sortBox('mergeSort',20,
     async (numbers, iterations)=>{
         if (subLists.length===0) {
@@ -366,6 +381,7 @@ const mergeSort = new sortBox('mergeSort',20,
     }
 );
 
+// Bogosort! Obviously the best one
 const bogoSort = new sortBox('bogoSort',6,
     async (numbers,iterations)=>{
         let found=true;
